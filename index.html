@@ -1,155 +1,295 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MIKEMUSIC - Distribución Musical</title>
-  <style>
-    /* Estilos globales */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #111;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIKEMUSIC - Profesional Ultra</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
-    header {
-      background: #111;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
+<style>
+/* Base */
+body{
+  font-family: 'Montserrat', sans-serif;
+  margin:0; padding:0;
+  scroll-behavior: smooth;
+  background: #f2f2f2;
+  color:#111;
+}
 
-    nav {
-      background: #222;
-      display: flex;
-      justify-content: center;
-      padding: 10px;
-    }
+/* Navegación fija transparente que cambia con scroll */
+header{
+  background: transparent;
+  position: fixed;
+  width: 100%;
+  top:0;
+  left:0;
+  z-index: 1000;
+  transition: background 0.5s, box-shadow 0.5s;
+  padding:20px 0;
+}
+header.scrolled{
+  background: linear-gradient(90deg,#ff416c,#ff4b2b);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+header h1{
+  color:white;
+  text-align:center;
+  font-size:28px;
+  margin:0;
+}
+nav{
+  display:flex;
+  justify-content:center;
+  margin-top:10px;
+}
+nav a{
+  color:white;
+  text-decoration:none;
+  margin:0 18px;
+  font-size:16px;
+  padding:5px 10px;
+  border-radius:5px;
+  transition: all 0.3s;
+}
+nav a:hover{
+  background: linear-gradient(90deg,#ff416c,#ff4b2b);
+  transform: scale(1.1);
+}
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 16px;
-    }
+/* Banner Parallax */
+.banner{
+  background: url("banner_servicios.jpg") no-repeat center center/cover;
+  height:80vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  position: relative;
+  overflow:hidden;
+  background-attachment: fixed;
+}
+.banner::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:100%;
+  background: rgba(0,0,0,0.4);
+}
+.banner-texto{
+  position:relative;
+  z-index:1;
+  opacity:0;
+  transform: translateY(-50px);
+  transition: all 1s ease-out;
+}
+.banner-texto.visible{
+  opacity:1;
+  transform: translateY(0);
+}
+.banner-texto h2{font-size:45px;margin-bottom:15px;text-shadow:2px 2px 10px rgba(0,0,0,0.6);}
+.banner-texto p{font-size:20px;text-shadow:1px 1px 6px rgba(0,0,0,0.6);}
 
-    nav a:hover {
-      color: #1db954; /* Verde tipo Spotify */
-    }
+/* Secciones con degradados animados */
+section{
+  padding:80px 20px;
+  transition: background 1s;
+}
+.servicios{
+  text-align:center;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+}
+.servicios h2{font-size:36px;margin-bottom:50px;color:#fff;text-shadow:1px 1px 4px rgba(0,0,0,0.3);}
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:30px;
+}
+.card{
+  background:white;
+  width:260px;
+  border-radius:15px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.2);
+  overflow:hidden;
+  cursor:pointer;
+  transition: transform 0.5s, box-shadow 0.5s, background 0.5s;
+  opacity:0;
+  transform: translateY(50px);
+}
+.card.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  transition: transform 0.5s;
+}
+.card-content{
+  padding:18px;
+  text-align:center;
+}
+.card-content h3{margin:10px 0;color:#ff4b2b;}
+.card-content p{font-size:14px;color:#555;}
+.card:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 15px 30px rgba(0,0,0,0.4);
+  background: linear-gradient(145deg,#fad0c4,#ff9a9e);
+}
+.card:hover img{transform:scale(1.1);}
 
-    section {
-      padding: 50px 20px;
-      text-align: center;
-    }
+/* Galería interactiva */
+.galeria{
+  background: linear-gradient(135deg,#a1c4fd,#c2e9fb);
+  text-align:center;
+}
+.galeria h2{font-size:36px;margin-bottom:50px;color:#111;text-shadow:1px 1px 3px rgba(255,255,255,0.5);}
+.galeria-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  max-width:1200px;
+  margin:auto;
+}
+.galeria-grid img{
+  width:100%;
+  border-radius:15px;
+  transition: transform 0.5s, box-shadow 0.5s;
+  cursor:pointer;
+  opacity:0;
+  transform: scale(0.8);
+}
+.galeria-grid img.visible{
+  opacity:1;
+  transform:scale(1);
+}
+.galeria-grid img:hover{
+  transform:scale(1.05);
+  box-shadow:0 12px 25px rgba(0,0,0,0.3);
+}
 
-    h2 {
-      margin-bottom: 20px;
-    }
+/* WhatsApp flotante */
+.whatsapp-fijo{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background:#25d366;
+  color:white;
+  padding:16px 22px;
+  border-radius:50px;
+  font-size:18px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index:1000;
+}
+.whatsapp-fijo i{margin-right:10px;}
+.whatsapp-fijo:hover{transform:scale(1.1);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
 
-    /* Formulario */
-    form {
-      max-width: 400px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    input, textarea {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      width: 100%;
-    }
-
-    button {
-      padding: 12px;
-      border: none;
-      background: #1db954;
-      color: white;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #17a444;
-    }
-
-    /* Redes sociales */
-    .redes {
-      margin-top: 30px;
-    }
-
-    .redes a {
-      margin: 0 10px;
-      text-decoration: none;
-      font-size: 20px;
-      color: #111;
-    }
-
-    footer {
-      background: #111;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-  </style>
+/* Footer */
+footer{
+  background: linear-gradient(90deg,#ff416c,#ff4b2b);
+  color:white;
+  text-align:center;
+  padding:25px;
+  font-size:14px;
+}
+</style>
 </head>
 <body>
 
-  <header>
-    MIKEMUSIC
-  </header>
-
+<header id="header">
+  <h1>MIKEMUSIC</h1>
   <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#servicios">Distribución</a>
-    <a href="#contacto">Contacto</a>
+    <a href="index.html">Inicio</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="servicios.html">Distribución</a>
+    <a href="index.html#contacto">Contacto</a>
   </nav>
+</header>
 
-  <section id="inicio">
-    <h2>Bienvenido a MIKEMUSIC</h2>
-    <p>Distribuimos tu música en todas las plataformas digitales.</p>
-  </section>
+<!-- Banner -->
+<section class="banner">
+  <div class="banner-texto" id="banner-texto">
+    <h2>Distribución Profesional de Música</h2>
+    <p>Lleva tu música a Spotify, YouTube, Apple Music y más</p>
+  </div>
+</section>
 
-  <section id="sobre">
-    <h2>Sobre Nosotros</h2>
-    <p>MIKEMUSIC es una plataforma dedicada a impulsar artistas y llevar su música al siguiente nivel.</p>
-  </section>
-
-  <section id="servicios">
-    <h2>Distribución</h2>
-    <p>Spotify, Apple Music, YouTube, TikTok y más. Tú creas, nosotros distribuimos.</p>
-  </section>
-
- <section id="contacto">
-  <h2>Contacto</h2>
-  <p>Escríbenos directamente por WhatsApp para distribución musical:</p>
-  <a href="https://wa.me/18494476813?text=Hola%20quiero%20distribuir%20mi%20música%20con%20MIKEMUSIC" 
-     target="_blank" 
-     class="whatsapp-btn">
-    <i class="fab fa-whatsapp"></i> Enviar mensaje
-  </a>
-
-    <div class="redes">
-     <p>Síguenos en:</p>
-       <a href="https://www.instagram.com/michaelchalas_19/">🎵 Instagram</a>
-      <a href="https://www.youtube.com/@mikemusic19">▶ YouTube</a>
-      <a href="https://open.spotify.com/intl-es/artist/0fS34PoMiyBECUJ3YoYj2Y">🎧 Spotify</a>
+<!-- Servicios -->
+<section class="servicios" id="servicios">
+  <h2>Nuestros Servicios</h2>
+  <div class="cards" id="cards">
+    <div class="card">
+      
+      <div class="card-content">
+        <h3>Distribuye tu música y recibe reportes de rendimiento</h3>
+        <p>.</p>
+      </div>
     </div>
-  </section>
+    <div class="card">
+     
+      <div class="card-content">
+        <h3>Sube videoclips y monetiza tu contenido</h3>
+        <p>.</p>
+      </div>
+    </div>
+    <div class="card">
+     
+      <div class="card-content">
+        <h3>Distribución profesional con cobertura global</h3>
+        <p>.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    © 2025 MIKEMUSIC - Todos los derechos reservados
-  </footer>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/18494476813?text=Hola%20quiero%20distribuir%20mi%20música%20con%20MIKEMUSIC" target="_blank" class="whatsapp-fijo">
+  <i class="fab fa-whatsapp"></i> Contáctanos
+</a>
+
+<footer>
+  © 2025 MIKEMUSIC - Todos los derechos reservados | Síguenos en
+  <a href="https://www.instagram.com/michaelchalas_19" target="_blank" style="color:white;">Instagram</a>,
+  <a href="https://www.youtube.com/@mikemusic19" target="_blank" style="color:white;">YouTube</a>,
+  <a href="https://open.spotify.com/artist/0fS34PoMiyBECUJ3YoYj2Y" target="_blank" style="color:white;">Spotify</a>
+</footer>
+
+<!-- JS -->
+<script>
+// Cambiar header al hacer scroll
+window.addEventListener('scroll',()=>{
+  const header = document.getElementById('header');
+  if(window.scrollY > 50){
+    header.classList.add('scrolled');
+  }else{
+    header.classList.remove('scrolled');
+  }
+
+  // Banner
+  const bannerTexto = document.getElementById('banner-texto');
+  if(window.scrollY>30){ bannerTexto.classList.add('visible'); }
+
+  // Animar cards
+  document.querySelectorAll('.card').forEach(card=>{
+    const top = card.getBoundingClientRect().top;
+    if(top<window.innerHeight-100) card.classList.add('visible');
+  });
+
+  // Animar galería
+  document.querySelectorAll('.galeria-grid img').forEach(img=>{
+    const top = img.getBoundingClientRect().top;
+    if(top<window.innerHeight-100) img.classList.add('visible');
+  });
+});
+</script>
 
 </body>
 </html>
