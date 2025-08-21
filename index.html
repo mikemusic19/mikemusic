@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIKEMUSIC - Distribución Musical</title>
+  <style>
+    /* Estilos globales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #111;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav {
+      background: #222;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      color: #1db954; /* Verde tipo Spotify */
+    }
+
+    section {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    /* Formulario */
+    form {
+      max-width: 400px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    button {
+      padding: 12px;
+      border: none;
+      background: #1db954;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #17a444;
+    }
+
+    /* Redes sociales */
+    .redes {
+      margin-top: 30px;
+    }
+
+    .redes a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #111;
+    }
+
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    MIKEMUSIC
+  </header>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#servicios">Distribución</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section id="inicio">
+    <h2>Bienvenido a MIKEMUSIC</h2>
+    <p>Distribuimos tu música en todas las plataformas digitales.</p>
+  </section>
+
+  <section id="sobre">
+    <h2>Sobre Nosotros</h2>
+    <p>MIKEMUSIC es una plataforma dedicada a impulsar artistas y llevar su música al siguiente nivel.</p>
+  </section>
+
+  <section id="servicios">
+    <h2>Distribución</h2>
+    <p>Spotify, Apple Music, YouTube, Deezer y más. Tú creas, nosotros distribuimos.</p>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <form>
+      <input type="text" placeholder="Nombre" required>
+      <input type="email" placeholder="Correo electrónico" required>
+      <textarea rows="5" placeholder="Tu mensaje..." required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div class="redes">
+      <p>Síguenos en:</p>
+      <a href="#">🎵 Instagram</a>
+      <a href="#">▶ YouTube</a>
+      <a href="#">🎧 Spotify</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 MIKEMUSIC - Todos los derechos reservados
+  </footer>
+
+</body>
+</html>
