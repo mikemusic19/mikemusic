@@ -200,96 +200,111 @@ footer{
   font-size:14px;
 }
 </style>
-</head>
-<body>
-
-<header id="header">
-  <h1>MIKEMUSIC</h1>
-  <nav>
-    <a href="index.html">Inicio</a>
-    <a href="sobre.html">Sobre</a>
-    <a href="servicios.html">Distribución</a>
-    <a href="index.html#contacto">Contacto</a>
-  </nav>
-</header>
-
-<!-- Banner -->
-<section class="banner">
-  <div class="banner-texto" id="banner-texto">
-    <h2>Distribución Profesional de Música</h2>
-    <p>Lleva tu música a Spotify, YouTube, Apple Music y más</p>
-  </div>
-</section>
-
-<!-- Servicios -->
-<section class="servicios" id="servicios">
-  <h2>Nuestros Servicios</h2>
-  <div class="cards" id="cards">
-    <div class="card">
-      
-      <div class="card-content">
-        <h3>Distribuye tu música y recibe reportes de rendimiento</h3>
-        <p>.</p>
-      </div>
-    </div>
-    <div class="card">
-     
-      <div class="card-content">
-        <h3>Sube videoclips y monetiza tu contenido</h3>
-        <p>.</p>
-      </div>
-    </div>
-    <div class="card">
-     
-      <div class="card-content">
-        <h3>Distribución profesional con cobertura global</h3>
-        <p>.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- WhatsApp -->
-<a href="https://wa.me/18494476813?text=Hola%20quiero%20distribuir%20mi%20música%20con%20MIKEMUSIC" target="_blank" class="whatsapp-fijo">
-  <i class="fab fa-whatsapp"></i> Contáctanos
-</a>
-
-<footer>
-  © 2025 MIKEMUSIC - Todos los derechos reservados | Síguenos en
-  <a href="https://www.instagram.com/michaelchalas_19" target="_blank" style="color:white;">Instagram</a>,
-  <a href="https://www.youtube.com/@mikemusic19" target="_blank" style="color:white;">YouTube</a>,
-  <a href="https://open.spotify.com/artist/0fS34PoMiyBECUJ3YoYj2Y" target="_blank" style="color:white;">Spotify</a>
+<!DOCTYPE html>
+<div>
+<div class="muted subtle">Compañía</div>
+<div><a href="#/servicios">Servicios</a></div>
+<div><a href="#/precios">Precios</a></div>
+<div><a href="#/soporte">Soporte</a></div>
+</div>
+<div>
+<div class="muted subtle">Legal</div>
+<div><a href="#">Términos</a></div>
+<div><a href="#">Privacidad</a></div>
+<div><a href="#">Cookies</a></div>
+</div>
+</div>
+</div>
 </footer>
 
-<!-- JS -->
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+
+<style>
+.input{border:1px solid #223045;background:#0b1220;color:#e5e7eb;border-radius:12px;padding:12px 14px;outline:none}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--ring)}
+</style>
+
+
 <script>
-// Cambiar header al hacer scroll
-window.addEventListener('scroll',()=>{
-  const header = document.getElementById('header');
-  if(window.scrollY > 50){
-    header.classList.add('scrolled');
-  }else{
-    header.classList.remove('scrolled');
-  }
+// --- tiny helpers
+const $ = (s, c=document) => c.querySelector(s);
+const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
+const toast = (m) => { const t=$('#toast'); t.textContent=m; t.style.display='block'; setTimeout(()=>t.style.display='none',2200)}
 
-  // Banner
-  const bannerTexto = document.getElementById('banner-texto');
-  if(window.scrollY>30){ bannerTexto.classList.add('visible'); }
 
-  // Animar cards
-  document.querySelectorAll('.card').forEach(card=>{
-    const top = card.getBoundingClientRect().top;
-    if(top<window.innerHeight-100) card.classList.add('visible');
-  });
+// --- SPA router (hash based)
+function showRoute(route){
+const r = (route||'home').replace('#/','');
+$$('#app [data-route]').forEach(sec=>sec.classList.toggle('hidden', sec.dataset.route!==r));
+$$('[data-nav]').forEach(a=>a.classList.toggle('active', a.getAttribute('href')===`#/${r}`));
+document.title = `MIKEMUSIC • ${r.charAt(0).toUpperCase()+r.slice(1)}`;
+}
+window.addEventListener('hashchange', ()=>showRoute(location.hash));
 
-  // Animar galería
-  document.querySelectorAll('.galeria-grid img').forEach(img=>{
-    const top = img.getBoundingClientRect().top;
-    if(top<window.innerHeight-100) img.classList.add('visible');
-  });
+
+// --- Counters + live demo numbers
+function animateCounter(el){
+const end = parseFloat(el.dataset.counter);
+let cur=0; const step = end/60; // ~1s
+const pfx = el.dataset.prefix||''; const sfx = el.dataset.suffix||'';
+const int = setInterval(()=>{cur+=step; if(cur>=end){cur=end; clearInterval(int)} el.textContent=`${pfx}${(Math.round(cur*100)/100).toLocaleString('en-US')}${sfx}`},16);
+}
+function randomizeDashboard(){
+$('#rev').textContent=(Math.random()*1234+1500).toFixed(2);
+$('#plays').textContent=(Math.random()*50000+20000|0).toLocaleString('en-US');
+$('#growth').textContent=(Math.random()*18+2).toFixed(1);
+$('#db-plays').textContent=(Math.random()*900000|0).toLocaleString('en-US');
+$('#db-saves').textContent=(Math.random()*60000|0).toLocaleString('en-US');
+$('#db-income').textContent=`$${(Math.random()*12000+3000).toFixed(2)}`;
+}
+
+
+// --- File drop handlers
+function initDrop(area){
+const highlight = v=> area.style.borderColor = v? 'var(--accent)':'#334155';
+['dragenter','dragover'].forEach(e=> area.addEventListener(e, ev=>{ev.preventDefault(); highlight(true)}));
+;['dragleave','drop'].forEach(e=> area.addEventListener(e, ev=>{ev.preventDefault(); highlight(false)}));
+area.addEventListener('drop', ev=>{ const files=[...ev.dataTransfer.files]; toast(`${files.length} archivo(s) listos`)});
+}
+
+
+// --- Pricing toggle
+function setupBilling(){
+const sw = $('#billing');
+const base = $$('#precios [data-price]');
+function render(){ base.forEach(el=>{ const m = +el.dataset.price; const v = sw.checked? (m*12*0.8)|0 : m; el.textContent = `$${v}`;}); }
+sw?.addEventListener('change', render); render();
+}
+
+
+// --- FAQ accordions (close siblings)
+function setupFaq(){
+$$('#soporte details summary').forEach(s=> s.addEventListener('click', e=>{
+const d = e.target.parentElement; $$('#soporte details').forEach(x=>{ if(x!==d) x.removeAttribute('open') });
+}));
+}
+
+
+// --- Wizard + Contact forms
+$('#contact')?.addEventListener('submit', e=>{e.preventDefault(); toast('¡Gracias! Te responderemos muy pronto'); e.target.reset()});
+$('#wizard')?.addEventListener('submit', e=>{e.preventDefault(); const fd=new FormData(e.target); const title=fd.get('title'); const artist=fd.get('artist'); const date=fd.get('date'); const isrc=fd.get('isrc')||('AUTO'+Math.random().toString().slice(2,8));
+const li=document.createElement('li'); li.innerHTML=`<svg width=20 height=20 viewBox='0 0 24 24' fill='none'><path d='M5 12l4 4 10-10' stroke='#10b981' stroke-width='2'/></svg> <strong>${title}</strong> — ${artist} <span class='muted subtle'>(${date})</span> <span class='pill'>ISRC ${isrc}</span>`; $('#releases').prepend(li); toast('Lanzamiento validado'); location.hash = '#/dashboard';
+});
+
+
+// --- On load
+document.addEventListener('DOMContentLoaded', ()=>{
+showRoute(location.hash||'#/home');
+setupBilling();
+setupFaq();
+[$('#drop'), $('#drop2')].filter(Boolean).forEach(initDrop);
+randomizeDashboard();
+$$('#app [data-counter]').forEach(animateCounter);
+$('#year').textContent = new Date().getFullYear();
+$('#file')?.addEventListener('change', e=> toast(`${e.target.files.length} archivo(s) seleccionados`));
 });
 </script>
-
 </body>
 </html>
